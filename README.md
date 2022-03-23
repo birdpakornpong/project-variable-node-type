@@ -6,15 +6,10 @@
 ```
 
 ### typescrpt 
-    1.
-```
-    npm install --save-dev typescript
-```
-    2.
-```
-    nano tsconfig.json
-```
+    $ npm install --save-dev typescript
+    $ nano tsconfig.json
     ภายใน tsconfig.json
+
 ```
 {
   "compilerOptions": {
@@ -30,9 +25,5 @@
 ```
 
 ### express
-```
-    npm install --save express
-```
-```
-    npm install -save-dev @types/express
-```
+    $ npm install --save express
+    $ npm install -save-dev @types/express
