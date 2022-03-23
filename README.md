@@ -50,10 +50,15 @@
 ```
 # Ignore artifacts:
 dist
+package.json
+package-lock.json
+node_modules
+*.json
 ```
 
 ### husky
+
     $ npm install --save-dev husky lint-staged
     $ npx husky install
     $ npm set-script prepare "husky install"
-    $ npx husky add .husky/pre-commit "npm run prettier:fix"   
+    $ npx husky add .husky/pre-commit "npm run prettier:fix"
