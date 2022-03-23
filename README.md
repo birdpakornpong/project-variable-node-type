@@ -51,3 +51,9 @@
 # Ignore artifacts:
 dist
 ```
+
+### husky
+    $ npm install --save-dev husky lint-staged
+    $ npx husky install
+    $ npm set-script prepare "husky install"
+    $ npx husky add .husky/pre-commit "npm run prettier:fix"   
