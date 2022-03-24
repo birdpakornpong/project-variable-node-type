@@ -1,21 +1,19 @@
+import "reflect-metadata"; // สำคัญมาก in บรรทัด 1
 import express from "express";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
+import container from "./ioc/invensify.config";
+import { InversifyExpressServer } from "inversify-express-utils";
 
-const app = express();
+const server = new InversifyExpressServer(container);
 const port = 3000;
 const swaggerDocument = YAML.load("./swagger.yaml");
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
-app.get("/test", (req, res) => {
-  res.send("Test!");
-});
-
-app.listen(port, () => {
-  return console.log(`Express is listening at http://localhost:${port}`);
-});
+server
+  .setConfig((app: express.Application): void => {
+    app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+  })
+  .build()
+  .listen(port, () => {
+    console.log(`The service has been up and running on ${port} port`);
+  });
