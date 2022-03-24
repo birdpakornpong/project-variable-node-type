@@ -63,7 +63,8 @@ node_modules
     $ npm set-script prepare "husky install"
     $ npx husky add .husky/pre-commit "npm run prettier:fix"
 
-### webpack 
+### webpack
+
     $ npm install --save-dev webpack webpack-cli webpack-dev-server
 
     webpack.config.js
