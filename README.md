@@ -69,3 +69,8 @@ node_modules
 
     webpack.config.js
     tsconfig.json
+
+### swagger
+
+    $ npm install --save swagger-ui-express  yamljs express
+    swagger.yaml

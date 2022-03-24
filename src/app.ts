@@ -1,12 +1,12 @@
 import express from "express";
-import swaggerUi from 'swagger-ui-express';
-import YAML from 'yamljs'
+import swaggerUi from "swagger-ui-express";
+import YAML from "yamljs";
 
 const app = express();
 const port = 3000;
-const swaggerDocument = YAML.load('./swagger.yaml');
+const swaggerDocument = YAML.load("./swagger.yaml");
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
