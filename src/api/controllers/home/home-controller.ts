@@ -1,6 +1,6 @@
 import { inject } from "inversify";
 import { interfaces, controller, httpGet } from "inversify-express-utils";
-import { HomeService } from "src/api/services/homeService/home-service";
+import { HomeService } from "src/api/services/home-service/home-service";
 
 @controller("/")
 export class HomeController implements interfaces.Controller {
