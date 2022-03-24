@@ -11,7 +11,9 @@
     "prettier:fix": "prettier --write .",
     "build-webpack": "webpack",
     "test": "jest --coverage",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "build": "npm run copy-swagger-specification && npm run build-webpack",
+    "copy-swagger-specification": "copyfiles swagger.yml dist"
   },
   "repository": {
     "type": "git",
@@ -41,9 +43,12 @@
     "webpack-dev-server": "^4.7.4"
   },
   "dependencies": {
+    "copyfiles": "^2.4.1",
     "express": "^4.17.3",
+    "swagger-ui-express": "^4.3.0",
     "ts-loader": "^9.2.8",
     "tsconfig-paths-webpack-plugin": "^3.5.2",
-    "webpack-node-externals": "^3.0.0"
+    "webpack-node-externals": "^3.0.0",
+    "yamljs": "^0.3.0"
   }
 }
