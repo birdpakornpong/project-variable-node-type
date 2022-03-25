@@ -46,6 +46,7 @@
   "dependencies": {
     "copyfiles": "^2.4.1",
     "express": "^4.17.3",
+    "express-interceptor": "^1.2.0",
     "inversify": "^6.0.1",
     "inversify-express-utils": "^6.4.3",
     "reflect-metadata": "^0.1.13",

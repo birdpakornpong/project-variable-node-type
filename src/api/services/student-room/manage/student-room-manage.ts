@@ -24,8 +24,8 @@ export class StudentRoomManage implements StudentRoomService {
     return this.studentList;
   }
 
-  getById(id) {
-    const person = this.studentList.filter((item) => item.id == id);
+  async getById(id) {
+    const person = await this.studentList.filter((item) => item.id == id);
     return person;
   }
 

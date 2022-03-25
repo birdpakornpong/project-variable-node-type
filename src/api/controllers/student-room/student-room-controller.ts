@@ -1,5 +1,16 @@
 import { inject } from "inversify";
-import { interfaces, controller, httpGet } from "inversify-express-utils";
+import {
+  interfaces,
+  controller,
+  httpGet,
+  queryParam,
+  requestParam,
+  httpDelete,
+  requestHeaders,
+  httpPost,
+  requestBody,
+} from "inversify-express-utils";
+import { StudentRoom } from "src/api/interfaces/student-room-interface";
 import { StudentRoomService } from "src/api/services/student-room/student-room-service";
 
 @controller("/student")
@@ -11,5 +22,41 @@ export class StudentRoomController implements interfaces.Controller {
   @httpGet("/")
   public getHello() {
     return this.studentRoomService.getAll();
+  }
+
+  @httpGet("/byId")
+  public getById(
+    @queryParam("id") id: string // eslint-disable-line @typescript-eslint/indent
+  ) {
+    return this.studentRoomService.getById(id);
+  }
+
+  @httpGet("/by-id/:id")
+  public getByIds(
+    @requestParam("id") id: string // eslint-disable-line @typescript-eslint/indent
+  ) {
+    return this.studentRoomService.getById(id);
+  }
+
+  @httpDelete("/delete/:id")
+  private deleteById(
+    @requestParam("id") id: string // eslint-disable-line @typescript-eslint/indent
+  ) {
+    return this.studentRoomService.deleteStudent(Number(id));
+  }
+
+  @httpGet("/get-by-id")
+  private getByIdReqHeader(
+    @requestHeaders("ids") ids: string // eslint-disable-line @typescript-eslint/indent
+  ) {
+    return this.studentRoomService.getById(Number(ids));
+  }
+
+  @httpPost("/create")
+  private create(
+    @requestBody() student: any // eslint-disable-line @typescript-eslint/indent
+  ) {
+    const { firstName, lastName, age, point } = student;
+    return this.studentRoomService.addStudent(firstName, lastName, age, point);
   }
 }

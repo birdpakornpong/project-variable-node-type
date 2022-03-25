@@ -12,6 +12,8 @@ const swaggerDocument = YAML.load("./swagger.yaml");
 server
   .setConfig((app: express.Application): void => {
     app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+    app.use(express.json());
+    // app.use(RequestLogMiddleware.handle, RequestLogMiddleware.responseInterceptor());
   })
   .build()
   .listen(port, () => {

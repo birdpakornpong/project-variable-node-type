@@ -1,5 +1,5 @@
 export interface StudentRoom {
-  id: number;
+  id?: number;
   firstName: string;
   lastName: string;
   age: number;
