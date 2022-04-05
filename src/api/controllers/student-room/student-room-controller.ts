@@ -55,10 +55,6 @@ export class StudentRoomController implements interfaces.Controller {
   private create(
     @requestBody() student: any // eslint-disable-line @typescript-eslint/indent
   ) {
-    let bird = "pakornpong"
-    bird = "hiranja"
-    bird = "pakr"
-    var pakorn = Symbol.for("birds")
     const { firstName, lastName, age, point } = student;
     return this.studentRoomService.addStudent(firstName, lastName, age, point);
   }

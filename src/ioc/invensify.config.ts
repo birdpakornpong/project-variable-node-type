@@ -10,5 +10,4 @@ const container = new Container();
 container.bind<HomeService>("HomeService").to(Home);
 container.bind<StudentRoomService>("StudentRoomService").to(StudentRoomManage);
 
-
 export default container;
