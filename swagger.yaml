@@ -16,7 +16,7 @@ paths:
             application/json:
               schema:
                 type: string
-  /test:
+  /student:
     get:
       summary: test.
       description: desciption API.
