@@ -6,6 +6,10 @@ const TYPES = {
   WeaponWarriors: Symbol.for("WeaponWarriors"),
   Monsters: Symbol.for("Monsters"),
   PVPMode: Symbol.for("PvPMode"),
+  ModelsProvider: Symbol.for("models-provider"), // dynomodb
+  ProductsModel: Symbol.for("products-model"),
+  ProductDao: Symbol.for("products-dao"),
+  ProductService: Symbol.for("product-service"),
 };
 
 export { TYPES };

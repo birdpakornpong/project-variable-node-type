@@ -44,7 +44,10 @@
     "webpack-dev-server": "^4.7.4"
   },
   "dependencies": {
+    "@types/aws-sdk": "^2.7.0",
+    "aws-sdk": "^2.1109.0",
     "copyfiles": "^2.4.1",
+    "dynamoose": "^2.8.5",
     "express": "^4.17.3",
     "express-interceptor": "^1.2.0",
     "inversify": "^6.0.1",

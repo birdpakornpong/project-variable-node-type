@@ -27,7 +27,8 @@ export class PlayerPVP implements PvPMode {
       ((monsterDetail.level * monsterDetail.power + monsterDetail.hp) *
         monsterDetail.bulf) /
       monsterDetail.debulf;
-    const result = powerPlayer - powerMonster > 0 ? "Player Win" : "Monster Win";
+    const result =
+      powerPlayer - powerMonster > 0 ? "Player Win" : "Monster Win";
     return [
       {
         player: playerDetail,

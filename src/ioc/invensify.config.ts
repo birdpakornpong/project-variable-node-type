@@ -1,4 +1,5 @@
-import { Container } from "inversify";
+import { Container, interfaces } from "inversify";
+import { ModelsProvider } from "src/api/models/models-provider";
 import {
   WarriorC,
   WeaponWarriorC,
@@ -22,12 +23,50 @@ import { Home } from "src/api/services/home-service/manage/home-manage";
 import { StudentRoomManage } from "src/api/services/student-room/manage/student-room-manage";
 import { StudentRoomService } from "src/api/services/student-room/student-room-service";
 import "../api/controllers";
+import * as dynamoose from "dynamoose";
 import { TYPES } from "./type";
+import { DynamoDB } from "aws-sdk";
+import { ModelType } from "dynamoose/dist/General";
+import { AnyDocument } from "dynamoose/dist/Document";
+import { ProductService } from "src/api/services/products/product-service";
+import { DynamoDbProductService } from "src/api/services/products/dynamodb/dynamodb-products";
+import { IProductsDao } from "src/api/dao/products.dao";
+import { ProductsDao } from "src/api/dao/dynamodb/products-dao";
 
 const container = new Container();
 
-container.bind<HomeService>("HomeService").to(Home);
+// Table
+container
+  .bind<ModelsProvider>(TYPES.ModelsProvider)
+  .toDynamicValue(() => ModelsProvider.getInstance())
+  .inSingletonScope()
+  .onActivation((context: interfaces.Context, injectable: ModelsProvider) => {
+    console.log("1");
+    // dynamoose.aws.ddb.local('http://localhost:8000');
+    const dynamoDBClient = new DynamoDB({
+      region: "local",
+      endpoint: "http://localhost:8000",
+    });
+    dynamoose.aws.ddb.set(dynamoDBClient);
 
+    return injectable;
+  });
+
+container
+  .bind<ModelType<AnyDocument>>(TYPES.ProductsModel)
+  .toDynamicValue((context: interfaces.Context) => {
+    const modelsProvider: ModelsProvider = context.container.get(
+      TYPES.ModelsProvider
+    );
+
+    return modelsProvider.getProductsModel();
+  })
+  .inSingletonScope();
+
+container.bind<IProductsDao>(TYPES.ProductDao).to(ProductsDao);
+container.bind<ProductService>(TYPES.ProductService).to(DynamoDbProductService);
+
+container.bind<HomeService>("HomeService").to(Home);
 container.bind<StudentRoomService>("StudentRoomService").to(StudentRoomManage);
 container.bind<Warrior>(TYPES.Warrior).to(Ninja);
 container.bind<Weapon>(TYPES.Weapon).to(Katana);
