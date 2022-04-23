@@ -15,7 +15,6 @@ export class VariableController implements interfaces.Controller {
     public async create(
         @requestBody() data
     ): Promise<void> {
-        console.log('data', data)
         try {
             const result = await this.variableService.create(data);
             return result

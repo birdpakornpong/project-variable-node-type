@@ -36,6 +36,10 @@ import { VariableDao } from "src/api/dao/dynamodb/variable-dao";
 import { IVariableDao } from "src/api/dao/variable.dao";
 import { VariableService } from "src/api/services/variable/dynamodb/dynamodb-variable";
 import { IVariableService } from "src/api/services/variable/variable-service";
+import { ITypeDao } from "src/api/dao/type.dao";
+import { TypeDao } from "src/api/dao/dynamodb/type-dao";
+import { ITypeService } from "src/api/services/type/type-service";
+import { TypeService } from "src/api/services/type/dynamodb/dynamodb-type";
 
 const container = new Container();
 
@@ -67,7 +71,7 @@ container
   .inSingletonScope();
 container.bind<IProductsDao>(TYPES.ProductDao).to(ProductsDao);
 container.bind<ProductService>(TYPES.ProductService).to(DynamoDbProductService);
-
+// variable
 container
   .bind<ModelType<AnyDocument>>(TYPES.VariableModel)
   .toDynamicValue((context: interfaces.Context) => {
@@ -80,6 +84,19 @@ container
 .inSingletonScope();
 container.bind<IVariableDao>(TYPES.VariableDao).to(VariableDao);
 container.bind<IVariableService>(TYPES.VariableService).to(VariableService);
+// type
+container
+  .bind<ModelType<AnyDocument>>(TYPES.TypeModel)
+  .toDynamicValue((context: interfaces.Context) => {
+    const modelsProvider: ModelsProvider = context.container.get(
+      TYPES.ModelsProvider
+    );
+
+    return modelsProvider.getTypeModel();
+  })
+.inSingletonScope();
+container.bind<ITypeDao>(TYPES.TypeDao).to(TypeDao);
+container.bind<ITypeService>(TYPES.TypeService).to(TypeService);
 
 container.bind<HomeService>("HomeService").to(Home);
 container.bind<StudentRoomService>("StudentRoomService").to(StudentRoomManage);
