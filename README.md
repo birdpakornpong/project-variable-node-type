@@ -1,5 +1,8 @@
 # node-typescript-setup
-
+    export NODE_ENV='development'
+    export AWS_ACCESS_KEY_ID=dummykey
+    export AWS_SECRET_ACCESS_KEY=dummykey
+    export AWS_REGION=us-east-1
 ### node.js package.json
 
     $ npm init -y

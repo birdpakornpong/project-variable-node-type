@@ -32,6 +32,10 @@ import { ProductService } from "src/api/services/products/product-service";
 import { DynamoDbProductService } from "src/api/services/products/dynamodb/dynamodb-products";
 import { IProductsDao } from "src/api/dao/products.dao";
 import { ProductsDao } from "src/api/dao/dynamodb/products-dao";
+import { VariableDao } from "src/api/dao/dynamodb/variable-dao";
+import { IVariableDao } from "src/api/dao/variable.dao";
+import { VariableService } from "src/api/services/variable/dynamodb/dynamodb-variable";
+import { IVariableService } from "src/api/services/variable/variable-service";
 
 const container = new Container();
 
@@ -41,10 +45,9 @@ container
   .toDynamicValue(() => ModelsProvider.getInstance())
   .inSingletonScope()
   .onActivation((context: interfaces.Context, injectable: ModelsProvider) => {
-    console.log("1");
     // dynamoose.aws.ddb.local('http://localhost:8000');
     const dynamoDBClient = new DynamoDB({
-      region: "local",
+      // region: "local",
       endpoint: "http://localhost:8000",
     });
     dynamoose.aws.ddb.set(dynamoDBClient);
@@ -62,9 +65,21 @@ container
     return modelsProvider.getProductsModel();
   })
   .inSingletonScope();
-
 container.bind<IProductsDao>(TYPES.ProductDao).to(ProductsDao);
 container.bind<ProductService>(TYPES.ProductService).to(DynamoDbProductService);
+
+container
+  .bind<ModelType<AnyDocument>>(TYPES.VariableModel)
+  .toDynamicValue((context: interfaces.Context) => {
+    const modelsProvider: ModelsProvider = context.container.get(
+      TYPES.ModelsProvider
+    );
+
+    return modelsProvider.getVariableModel();
+  })
+.inSingletonScope();
+container.bind<IVariableDao>(TYPES.VariableDao).to(VariableDao);
+container.bind<IVariableService>(TYPES.VariableService).to(VariableService);
 
 container.bind<HomeService>("HomeService").to(Home);
 container.bind<StudentRoomService>("StudentRoomService").to(StudentRoomManage);
