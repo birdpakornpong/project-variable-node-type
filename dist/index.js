@@ -2,9 +2,25 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/api/controllers/game-controller.ts":
+/***/ "./src/api/controllers/index.ts":
+/*!**************************************!*\
+  !*** ./src/api/controllers/index.ts ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+//  variable
+__webpack_require__(/*! ./variable-controller */ "./src/api/controllers/variable-controller.ts");
+// type
+__webpack_require__(/*! ./type-controller */ "./src/api/controllers/type-controller.ts");
+
+
+/***/ }),
+
+/***/ "./src/api/controllers/type-controller.ts":
 /*!************************************************!*\
-  !*** ./src/api/controllers/game-controller.ts ***!
+  !*** ./src/api/controllers/type-controller.ts ***!
   \************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -21,249 +37,50 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.GameController = void 0;
+exports.Typecontroller = void 0;
 const inversify_1 = __webpack_require__(/*! inversify */ "inversify");
 const inversify_express_utils_1 = __webpack_require__(/*! inversify-express-utils */ "inversify-express-utils");
 const type_1 = __webpack_require__(/*! src/ioc/type */ "./src/ioc/type.ts");
-let GameController = class GameController {
-    constructor(warrior) {
-        this.warrior = warrior;
+const dynamodb_type_1 = __webpack_require__(/*! ../services/type/dynamodb/dynamodb-type */ "./src/api/services/type/dynamodb/dynamodb-type.ts");
+let Typecontroller = class Typecontroller {
+    constructor(typeService) {
+        this.typeService = typeService;
     }
-    getNinja() {
-        return this.warrior.fight();
-    }
-};
-__decorate([
-    (0, inversify_express_utils_1.httpGet)("/"),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], GameController.prototype, "getNinja", null);
-GameController = __decorate([
-    (0, inversify_express_utils_1.controller)("/game"),
-    __param(0, (0, inversify_1.inject)(type_1.TYPES.Warrior)),
-    __metadata("design:paramtypes", [Object])
-], GameController);
-exports.GameController = GameController;
-
-
-/***/ }),
-
-/***/ "./src/api/controllers/home/home-controller.ts":
-/*!*****************************************************!*\
-  !*** ./src/api/controllers/home/home-controller.ts ***!
-  \*****************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.HomeController = void 0;
-const inversify_1 = __webpack_require__(/*! inversify */ "inversify");
-const inversify_express_utils_1 = __webpack_require__(/*! inversify-express-utils */ "inversify-express-utils");
-let HomeController = class HomeController {
-    constructor(homeService) {
-        this.homeService = homeService;
-    }
-    getHello() {
-        return this.homeService.getHello();
+    create(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const result = yield this.typeService.create(data);
+                return result;
+            }
+            catch (err) {
+                console.log('err', err);
+            }
+        });
     }
 };
-__decorate([
-    (0, inversify_express_utils_1.httpGet)("/"),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], HomeController.prototype, "getHello", null);
-HomeController = __decorate([
-    (0, inversify_express_utils_1.controller)("/"),
-    __param(0, (0, inversify_1.inject)("HomeService")),
-    __metadata("design:paramtypes", [Object])
-], HomeController);
-exports.HomeController = HomeController;
-
-
-/***/ }),
-
-/***/ "./src/api/controllers/index.ts":
-/*!**************************************!*\
-  !*** ./src/api/controllers/index.ts ***!
-  \**************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-__webpack_require__(/*! ./home/home-controller */ "./src/api/controllers/home/home-controller.ts");
-__webpack_require__(/*! ./student-room/student-room-controller */ "./src/api/controllers/student-room/student-room-controller.ts");
-__webpack_require__(/*! ./game-controller */ "./src/api/controllers/game-controller.ts");
-__webpack_require__(/*! ./product-controller */ "./src/api/controllers/product-controller.ts");
-//  variable
-__webpack_require__(/*! ./variable-controller */ "./src/api/controllers/variable-controller.ts");
-
-
-/***/ }),
-
-/***/ "./src/api/controllers/product-controller.ts":
-/*!***************************************************!*\
-  !*** ./src/api/controllers/product-controller.ts ***!
-  \***************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ProductController = void 0;
-const inversify_1 = __webpack_require__(/*! inversify */ "inversify");
-const inversify_express_utils_1 = __webpack_require__(/*! inversify-express-utils */ "inversify-express-utils");
-const type_1 = __webpack_require__(/*! src/ioc/type */ "./src/ioc/type.ts");
-let ProductController = class ProductController {
-    constructor(productService) {
-        this.productService = productService;
-    }
-    get() {
-        return this.productService.getScan();
-    }
-};
-__decorate([
-    (0, inversify_express_utils_1.httpGet)("/get"),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], ProductController.prototype, "get", null);
-ProductController = __decorate([
-    (0, inversify_express_utils_1.controller)("/product"),
-    __param(0, (0, inversify_1.inject)(type_1.TYPES.ProductService)),
-    __metadata("design:paramtypes", [Object])
-], ProductController);
-exports.ProductController = ProductController;
-
-
-/***/ }),
-
-/***/ "./src/api/controllers/student-room/student-room-controller.ts":
-/*!*********************************************************************!*\
-  !*** ./src/api/controllers/student-room/student-room-controller.ts ***!
-  \*********************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.StudentRoomController = void 0;
-const inversify_1 = __webpack_require__(/*! inversify */ "inversify");
-const inversify_express_utils_1 = __webpack_require__(/*! inversify-express-utils */ "inversify-express-utils");
-let StudentRoomController = class StudentRoomController {
-    constructor(studentRoomService) {
-        this.studentRoomService = studentRoomService;
-    }
-    getHello() {
-        return this.studentRoomService.getAll();
-    }
-    getById(id // eslint-disable-line @typescript-eslint/indent
-    ) {
-        return this.studentRoomService.getById(id);
-    }
-    getByIds(id // eslint-disable-line @typescript-eslint/indent
-    ) {
-        return this.studentRoomService.getById(id);
-    }
-    deleteById(id // eslint-disable-line @typescript-eslint/indent
-    ) {
-        return this.studentRoomService.deleteStudent(Number(id));
-    }
-    getByIdReqHeader(ids // eslint-disable-line @typescript-eslint/indent
-    ) {
-        return this.studentRoomService.getById(Number(ids));
-    }
-    create(student // eslint-disable-line @typescript-eslint/indent
-    ) {
-        const { firstName, lastName, age, point } = student;
-        return this.studentRoomService.addStudent(firstName, lastName, age, point);
-    }
-};
-__decorate([
-    (0, inversify_express_utils_1.httpGet)("/"),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], StudentRoomController.prototype, "getHello", null);
-__decorate([
-    (0, inversify_express_utils_1.httpGet)("/byId") //http://localhost:3000/student/byId?id=1
-    ,
-    __param(0, (0, inversify_express_utils_1.queryParam)("id")),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], StudentRoomController.prototype, "getById", null);
-__decorate([
-    (0, inversify_express_utils_1.httpGet)("/by-id/:id") //http://localhost:3000/student/byId/1
-    ,
-    __param(0, (0, inversify_express_utils_1.requestParam)("id")),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], StudentRoomController.prototype, "getByIds", null);
-__decorate([
-    (0, inversify_express_utils_1.httpDelete)("/delete/:id"),
-    __param(0, (0, inversify_express_utils_1.requestParam)("id")),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], StudentRoomController.prototype, "deleteById", null);
-__decorate([
-    (0, inversify_express_utils_1.httpGet)("/get-by-id"),
-    __param(0, (0, inversify_express_utils_1.requestHeaders)("ids")),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], StudentRoomController.prototype, "getByIdReqHeader", null);
 __decorate([
     (0, inversify_express_utils_1.httpPost)("/create"),
     __param(0, (0, inversify_express_utils_1.requestBody)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], StudentRoomController.prototype, "create", null);
-StudentRoomController = __decorate([
-    (0, inversify_express_utils_1.controller)("/student"),
-    __param(0, (0, inversify_1.inject)("StudentRoomService")),
-    __metadata("design:paramtypes", [Object])
-], StudentRoomController);
-exports.StudentRoomController = StudentRoomController;
+    __metadata("design:returntype", Promise)
+], Typecontroller.prototype, "create", null);
+Typecontroller = __decorate([
+    (0, inversify_express_utils_1.controller)("/type"),
+    __param(0, (0, inversify_1.inject)(type_1.TYPES.TypeService)),
+    __metadata("design:paramtypes", [dynamodb_type_1.TypeService])
+], Typecontroller);
+exports.Typecontroller = Typecontroller;
 
 
 /***/ }),
@@ -308,9 +125,31 @@ let VariableController = class VariableController {
     }
     create(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log('data', data);
             try {
                 const result = yield this.variableService.create(data);
+                return result;
+            }
+            catch (err) {
+                console.log('err', err);
+            }
+        });
+    }
+    getRelationType() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const result = yield this.variableService.getRelationType();
+                return result;
+            }
+            catch (err) {
+                console.log('err', err);
+            }
+        });
+    }
+    getStartAll(startAt, // ?startAt=10
+    limit) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const result = yield this.variableService.getStartAtLimit(startAt, limit);
                 return result;
             }
             catch (err) {
@@ -326,6 +165,21 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], VariableController.prototype, "create", null);
+__decorate([
+    (0, inversify_express_utils_1.httpGet)("/getType") // test
+    ,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], VariableController.prototype, "getRelationType", null);
+__decorate([
+    (0, inversify_express_utils_1.httpGet)("getStart"),
+    __param(0, (0, inversify_express_utils_1.queryParam)("startAt")),
+    __param(1, (0, inversify_express_utils_1.queryParam)("limit")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], VariableController.prototype, "getStartAll", null);
 VariableController = __decorate([
     (0, inversify_express_utils_1.controller)("/variable"),
     __param(0, (0, inversify_1.inject)(type_1.TYPES.VariableService)),
@@ -336,10 +190,10 @@ exports.VariableController = VariableController;
 
 /***/ }),
 
-/***/ "./src/api/dao/dynamodb/products-dao.ts":
-/*!**********************************************!*\
-  !*** ./src/api/dao/dynamodb/products-dao.ts ***!
-  \**********************************************/
+/***/ "./src/api/dao/dynamodb/type-dao.ts":
+/*!******************************************!*\
+  !*** ./src/api/dao/dynamodb/type-dao.ts ***!
+  \******************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -365,26 +219,43 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ProductsDao = void 0;
+exports.TypeDao = void 0;
 const inversify_1 = __webpack_require__(/*! inversify */ "inversify");
 const type_1 = __webpack_require__(/*! src/ioc/type */ "./src/ioc/type.ts");
-let ProductsDao = class ProductsDao {
-    constructor(productsModel) {
-        this.productsModel = productsModel;
+let TypeDao = class TypeDao {
+    constructor(typeModel) {
+        this.typeModel = typeModel;
     }
-    getScan() {
+    lengthTable() {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = this.productsModel.scan("name").contains("c").exec();
-            return result;
+            const length = yield this.typeModel.scan().count().exec();
+            return length;
+        });
+    }
+    create(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { count } = yield this.lengthTable();
+            try {
+                const result = yield this.typeModel.create({
+                    id: Number(count) + 1,
+                    name: data.name,
+                    description: data.description,
+                    sk: data.sk,
+                });
+                return result;
+            }
+            catch (err) {
+                console.log('err', err);
+            }
         });
     }
 };
-ProductsDao = __decorate([
+TypeDao = __decorate([
     (0, inversify_1.injectable)(),
-    __param(0, (0, inversify_1.inject)(type_1.TYPES.ProductsModel)),
+    __param(0, (0, inversify_1.inject)(type_1.TYPES.TypeModel)),
     __metadata("design:paramtypes", [Object])
-], ProductsDao);
-exports.ProductsDao = ProductsDao;
+], TypeDao);
+exports.TypeDao = TypeDao;
 
 
 /***/ }),
@@ -451,6 +322,19 @@ let VariableDao = class VariableDao {
             }
         });
     }
+    getRelationType() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield this.variableModel.get({ "id": 1, "sk": "test" });
+        });
+    }
+    getStartAtLimit(startAt, limit) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.variableModel.scan().limit(startAt).exec();
+            const result = yield this.variableModel.scan().startAt(response.lastKey).limit(limit).exec();
+            const resultSerialize = result.map((res) => res.serialize());
+            return resultSerialize;
+        });
+    }
 };
 VariableDao = __decorate([
     (0, inversify_1.injectable)(),
@@ -495,8 +379,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ModelsProvider = void 0;
 const dynamoose = __importStar(__webpack_require__(/*! dynamoose */ "dynamoose"));
-const product_schema_1 = __webpack_require__(/*! ./schemas/product-schema */ "./src/api/models/schemas/product-schema.ts");
 const variable_schema_1 = __webpack_require__(/*! ./schemas/variable-schema */ "./src/api/models/schemas/variable-schema.ts");
+const type_schema_1 = __webpack_require__(/*! ./schemas/type-schema */ "./src/api/models/schemas/type-schema.ts");
 class ModelsProvider {
     static getInstance() {
         if (!ModelsProvider.instance) {
@@ -504,17 +388,17 @@ class ModelsProvider {
         }
         return ModelsProvider.instance;
     }
-    getProductsModel() {
-        if (!this.productsModel) {
-            this.productsModel = dynamoose.model("Products", product_schema_1.ProductsSchema);
-        }
-        return this.productsModel;
-    }
     getVariableModel() {
         if (!this.variablesModel) {
             this.variablesModel = dynamoose.model("variables", variable_schema_1.VariableSchema);
         }
         return this.variablesModel;
+    }
+    getTypeModel() {
+        if (!this.typeModel) {
+            this.typeModel = dynamoose.model("types", type_schema_1.TypeSchema);
+        }
+        return this.typeModel;
     }
 }
 exports.ModelsProvider = ModelsProvider;
@@ -522,10 +406,10 @@ exports.ModelsProvider = ModelsProvider;
 
 /***/ }),
 
-/***/ "./src/api/models/schemas/product-schema.ts":
-/*!**************************************************!*\
-  !*** ./src/api/models/schemas/product-schema.ts ***!
-  \**************************************************/
+/***/ "./src/api/models/schemas/type-schema.ts":
+/*!***********************************************!*\
+  !*** ./src/api/models/schemas/type-schema.ts ***!
+  \***********************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -553,16 +437,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ProductsSchema = void 0;
+exports.TypeSchema = void 0;
 const dynamoose = __importStar(__webpack_require__(/*! dynamoose */ "dynamoose"));
-exports.ProductsSchema = new dynamoose.Schema({
+exports.TypeSchema = new dynamoose.Schema({
     id: {
         type: Number,
         hashKey: true,
-        required: true,
-    },
-    categoryId: {
-        type: Number,
         required: true,
     },
     name: {
@@ -573,15 +453,11 @@ exports.ProductsSchema = new dynamoose.Schema({
         type: String,
         required: true,
     },
-    price: {
-        type: Number,
-        required: true,
-    },
     sk: {
         type: String,
         rangeKey: true,
-        required: true,
-    },
+        required: true
+    }
 }, {
     timestamps: {
         createdAt: "CreateDate",
@@ -666,299 +542,10 @@ exports.VariableSchema = new dynamoose.Schema({
 
 /***/ }),
 
-/***/ "./src/api/services/game-new/dao/game-new-dao.ts":
-/*!*******************************************************!*\
-  !*** ./src/api/services/game-new/dao/game-new-dao.ts ***!
-  \*******************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.WarriorC = exports.WeaponWarriorC = void 0;
-const inversify_1 = __webpack_require__(/*! inversify */ "inversify");
-const type_1 = __webpack_require__(/*! src/ioc/type */ "./src/ioc/type.ts");
-let WeaponWarriorC = class WeaponWarriorC {
-    getWeaponRandom() {
-        const weapon = Math.random() > 0.5 ? "katana" : "sword";
-        return weapon;
-    }
-};
-WeaponWarriorC = __decorate([
-    (0, inversify_1.injectable)()
-], WeaponWarriorC);
-exports.WeaponWarriorC = WeaponWarriorC;
-let WarriorC = class WarriorC {
-    constructor(weapon, monster) {
-        this._weapon = weapon;
-        this._monster = monster;
-    }
-    detail() {
-        const type = Math.random() > 0.5 ? "Ninja" : "Ronin";
-        const gender = Math.random() > 0.5 ? "Men" : "Women";
-        const randomWeapon = this._weapon.getWeaponRandom();
-        const monster = this._monster.getMonster();
-        return {
-            type: type,
-            gender: gender,
-            weapon: randomWeapon,
-            god: monster,
-        };
-    }
-    getDetailPVP() {
-        const level = Number(Math.random().toFixed(2)) * 100;
-        const power = Number(Math.random().toFixed(2)) * 100;
-        const hp = Number(Math.random().toFixed(2)) * 10000;
-        const debulf = Number(Math.random().toFixed(2)) * 100;
-        const bulf = Number(Math.random().toFixed(2)) * 100;
-        return {
-            level,
-            power,
-            hp,
-            debulf,
-            bulf,
-        };
-    }
-};
-WarriorC = __decorate([
-    (0, inversify_1.injectable)(),
-    __param(0, (0, inversify_1.inject)(type_1.TYPES.WeaponWarriors)),
-    __param(1, (0, inversify_1.inject)(type_1.TYPES.Monsters)),
-    __metadata("design:paramtypes", [Object, Object])
-], WarriorC);
-exports.WarriorC = WarriorC;
-
-
-/***/ }),
-
-/***/ "./src/api/services/game-new/dao/monster.ts":
-/*!**************************************************!*\
-  !*** ./src/api/services/game-new/dao/monster.ts ***!
-  \**************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.MonsterPvP = void 0;
-const inversify_1 = __webpack_require__(/*! inversify */ "inversify");
-let MonsterPvP = class MonsterPvP {
-    getMonster() {
-        return Math.random() > 0.5 ? "Zeus" : "Hera";
-    }
-    getDetailPVP() {
-        const level = Number(Math.random().toFixed(2)) * 100;
-        const power = Number(Math.random().toFixed(2)) * 100;
-        const hp = Number(Math.random().toFixed(2)) * 10000;
-        const debulf = Number(Math.random().toFixed(2)) * 100;
-        const bulf = Number(Math.random().toFixed(2)) * 100;
-        return {
-            level,
-            power,
-            hp,
-            debulf,
-            bulf,
-        };
-    }
-};
-MonsterPvP = __decorate([
-    (0, inversify_1.injectable)()
-], MonsterPvP);
-exports.MonsterPvP = MonsterPvP;
-
-
-/***/ }),
-
-/***/ "./src/api/services/game-new/dao/pvp.ts":
-/*!**********************************************!*\
-  !*** ./src/api/services/game-new/dao/pvp.ts ***!
-  \**********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.PlayerPVP = void 0;
-const inversify_1 = __webpack_require__(/*! inversify */ "inversify");
-const type_1 = __webpack_require__(/*! src/ioc/type */ "./src/ioc/type.ts");
-let PlayerPVP = class PlayerPVP {
-    constructor(player, monster) {
-        this._player = player;
-        this._monster = monster;
-    }
-    pvpMode() {
-        const playerDetail = this._player.getDetailPVP();
-        const monsterDetail = this._monster.getDetailPVP();
-        const powerPlayer = ((playerDetail.level * playerDetail.power + playerDetail.hp) *
-            playerDetail.bulf) /
-            playerDetail.debulf;
-        const powerMonster = ((monsterDetail.level * monsterDetail.power + monsterDetail.hp) *
-            monsterDetail.bulf) /
-            monsterDetail.debulf;
-        const result = powerPlayer - powerMonster > 0 ? "Player Win" : "Monster Win";
-        return [
-            {
-                player: playerDetail,
-                powerPlayer,
-            },
-            {
-                monster: monsterDetail,
-                powerMonster,
-            },
-            { result },
-        ];
-    }
-};
-PlayerPVP = __decorate([
-    (0, inversify_1.injectable)(),
-    __param(0, (0, inversify_1.inject)(type_1.TYPES.Warriors)),
-    __param(1, (0, inversify_1.inject)(type_1.TYPES.Monsters)),
-    __metadata("design:paramtypes", [Object, Object])
-], PlayerPVP);
-exports.PlayerPVP = PlayerPVP;
-
-
-/***/ }),
-
-/***/ "./src/api/services/game/dao/game-dao.ts":
-/*!***********************************************!*\
-  !*** ./src/api/services/game/dao/game-dao.ts ***!
-  \***********************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Shuriken = exports.Katana = exports.Ninja = void 0;
-const inversify_1 = __webpack_require__(/*! inversify */ "inversify");
-const type_1 = __webpack_require__(/*! src/ioc/type */ "./src/ioc/type.ts");
-let Katana = class Katana {
-    hit() {
-        return "cut!";
-    }
-};
-Katana = __decorate([
-    (0, inversify_1.injectable)()
-], Katana);
-exports.Katana = Katana;
-let Shuriken = class Shuriken {
-    throw() {
-        return "hit!";
-    }
-};
-Shuriken = __decorate([
-    (0, inversify_1.injectable)()
-], Shuriken);
-exports.Shuriken = Shuriken;
-let Ninja = class Ninja {
-    constructor(katana, shuriken) {
-        this._katana = katana;
-        this._shuriken = shuriken;
-    }
-    fight() {
-        return this._katana.hit();
-    }
-    sneak() {
-        return this._shuriken.throw();
-    }
-};
-Ninja = __decorate([
-    (0, inversify_1.injectable)(),
-    __param(0, (0, inversify_1.inject)(type_1.TYPES.Weapon)),
-    __param(1, (0, inversify_1.inject)(type_1.TYPES.ThrowableWeapon)),
-    __metadata("design:paramtypes", [Object, Object])
-], Ninja);
-exports.Ninja = Ninja;
-
-
-/***/ }),
-
-/***/ "./src/api/services/home-service/manage/home-manage.ts":
-/*!*************************************************************!*\
-  !*** ./src/api/services/home-service/manage/home-manage.ts ***!
-  \*************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Home = void 0;
-const inversify_1 = __webpack_require__(/*! inversify */ "inversify");
-let Home = class Home {
-    getHello() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const users = [
-                { name: "bird", lastname: "hirun" },
-                { name: "pang", lastname: "hirsn" },
-            ];
-            return users;
-        });
-    }
-};
-Home = __decorate([
-    (0, inversify_1.injectable)()
-], Home);
-exports.Home = Home;
-
-
-/***/ }),
-
-/***/ "./src/api/services/products/dynamodb/dynamodb-products.ts":
-/*!*****************************************************************!*\
-  !*** ./src/api/services/products/dynamodb/dynamodb-products.ts ***!
-  \*****************************************************************/
+/***/ "./src/api/services/type/dynamodb/dynamodb-type.ts":
+/*!*********************************************************!*\
+  !*** ./src/api/services/type/dynamodb/dynamodb-type.ts ***!
+  \*********************************************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 
@@ -984,103 +571,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.DynamoDbProductService = void 0;
+exports.TypeService = void 0;
 const inversify_1 = __webpack_require__(/*! inversify */ "inversify");
+const type_dao_1 = __webpack_require__(/*! src/api/dao/dynamodb/type-dao */ "./src/api/dao/dynamodb/type-dao.ts");
 const type_1 = __webpack_require__(/*! src/ioc/type */ "./src/ioc/type.ts");
-let DynamoDbProductService = class DynamoDbProductService {
-    constructor(productDao) {
-        this.productDao = productDao;
+let TypeService = class TypeService {
+    constructor(typeDao) {
+        this.typeDao = typeDao;
     }
-    getScan() {
+    create(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.productDao.getScan();
-            return result;
+            return this.typeDao.create(data);
         });
     }
 };
-DynamoDbProductService = __decorate([
+TypeService = __decorate([
     (0, inversify_1.injectable)(),
-    __param(0, (0, inversify_1.inject)(type_1.TYPES.ProductDao)),
-    __metadata("design:paramtypes", [Object])
-], DynamoDbProductService);
-exports.DynamoDbProductService = DynamoDbProductService;
-
-
-/***/ }),
-
-/***/ "./src/api/services/student-room/manage/student-room-manage.ts":
-/*!*********************************************************************!*\
-  !*** ./src/api/services/student-room/manage/student-room-manage.ts ***!
-  \*********************************************************************/
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.StudentRoomManage = void 0;
-const inversify_1 = __webpack_require__(/*! inversify */ "inversify");
-let StudentRoomManage = class StudentRoomManage {
-    constructor() {
-        this.studentList = [
-            { id: 1, firstName: "bird", lastName: "test", age: 25, point: 65 },
-        ];
-    }
-    addStudent(firstName, lastName, age, point) {
-        const length = this.studentList.length;
-        const person = {
-            id: length + 1,
-            firstName,
-            lastName,
-            age,
-            point,
-        };
-        this.studentList.push(person);
-    }
-    getAll() {
-        return this.studentList;
-    }
-    getById(id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const person = yield this.studentList.filter((item) => item.id == id);
-            return person;
-        });
-    }
-    updateStudent(id, firstName = "default", lastName = "default", age = 25, point = 99) {
-        let person = this.studentList.find((item) => item.id == id);
-        person = {
-            id,
-            firstName,
-            lastName,
-            age,
-            point,
-        };
-        this.studentList[id - 1] = person;
-        return person;
-    }
-    deleteStudent(id) {
-        const person = this.studentList.filter((item) => item.id !== id);
-        this.studentList = person;
-        return this.studentList;
-    }
-};
-StudentRoomManage = __decorate([
-    (0, inversify_1.injectable)()
-], StudentRoomManage);
-exports.StudentRoomManage = StudentRoomManage;
+    __param(0, (0, inversify_1.inject)(type_1.TYPES.TypeDao)),
+    __metadata("design:paramtypes", [type_dao_1.TypeDao])
+], TypeService);
+exports.TypeService = TypeService;
 
 
 /***/ }),
@@ -1128,6 +638,18 @@ let VariableService = class VariableService {
             return result;
         });
     }
+    getRelationType() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield this.variableDao.getRelationType();
+            return result;
+        });
+    }
+    getStartAtLimit(startAt, limit) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = yield this.variableDao.getStartAtLimit(startAt, limit);
+            return result;
+        });
+    }
 };
 VariableService = __decorate([
     (0, inversify_1.injectable)(),
@@ -1156,18 +678,9 @@ const swagger_ui_express_1 = __importDefault(__webpack_require__(/*! swagger-ui-
 const yamljs_1 = __importDefault(__webpack_require__(/*! yamljs */ "yamljs"));
 const invensify_config_1 = __importDefault(__webpack_require__(/*! ./ioc/invensify.config */ "./src/ioc/invensify.config.ts"));
 const inversify_express_utils_1 = __webpack_require__(/*! inversify-express-utils */ "inversify-express-utils");
-const type_1 = __webpack_require__(/*! ./ioc/type */ "./src/ioc/type.ts");
 const server = new inversify_express_utils_1.InversifyExpressServer(invensify_config_1.default);
 const port = 3000;
 const swaggerDocument = yamljs_1.default.load("./swagger.yaml");
-const ninja = invensify_config_1.default.get(type_1.TYPES.Warrior);
-// console.log('ninja', ninja.fight())
-const warriorC = invensify_config_1.default.get(type_1.TYPES.Warriors);
-// console.log('warriorC', warriorC.getDetailPVP())
-const monster = invensify_config_1.default.get(type_1.TYPES.Monsters);
-// monster.getDetailPVP()
-const pvp = invensify_config_1.default.get(type_1.TYPES.PVPMode);
-console.log(" pvp", pvp.pvpMode());
 server
     .setConfig((app) => {
     app.use("/docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerDocument));
@@ -1215,20 +728,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const inversify_1 = __webpack_require__(/*! inversify */ "inversify");
 const models_provider_1 = __webpack_require__(/*! src/api/models/models-provider */ "./src/api/models/models-provider.ts");
-const game_new_dao_1 = __webpack_require__(/*! src/api/services/game-new/dao/game-new-dao */ "./src/api/services/game-new/dao/game-new-dao.ts");
-const monster_1 = __webpack_require__(/*! src/api/services/game-new/dao/monster */ "./src/api/services/game-new/dao/monster.ts");
-const pvp_1 = __webpack_require__(/*! src/api/services/game-new/dao/pvp */ "./src/api/services/game-new/dao/pvp.ts");
-const game_dao_1 = __webpack_require__(/*! src/api/services/game/dao/game-dao */ "./src/api/services/game/dao/game-dao.ts");
-const home_manage_1 = __webpack_require__(/*! src/api/services/home-service/manage/home-manage */ "./src/api/services/home-service/manage/home-manage.ts");
-const student_room_manage_1 = __webpack_require__(/*! src/api/services/student-room/manage/student-room-manage */ "./src/api/services/student-room/manage/student-room-manage.ts");
 __webpack_require__(/*! ../api/controllers */ "./src/api/controllers/index.ts");
-const dynamoose = __importStar(__webpack_require__(/*! dynamoose */ "dynamoose"));
 const type_1 = __webpack_require__(/*! ./type */ "./src/ioc/type.ts");
-const aws_sdk_1 = __webpack_require__(/*! aws-sdk */ "aws-sdk");
-const dynamodb_products_1 = __webpack_require__(/*! src/api/services/products/dynamodb/dynamodb-products */ "./src/api/services/products/dynamodb/dynamodb-products.ts");
-const products_dao_1 = __webpack_require__(/*! src/api/dao/dynamodb/products-dao */ "./src/api/dao/dynamodb/products-dao.ts");
+const dynamoose = __importStar(__webpack_require__(/*! dynamoose */ "dynamoose"));
 const variable_dao_1 = __webpack_require__(/*! src/api/dao/dynamodb/variable-dao */ "./src/api/dao/dynamodb/variable-dao.ts");
 const dynamodb_variable_1 = __webpack_require__(/*! src/api/services/variable/dynamodb/dynamodb-variable */ "./src/api/services/variable/dynamodb/dynamodb-variable.ts");
+const type_dao_1 = __webpack_require__(/*! src/api/dao/dynamodb/type-dao */ "./src/api/dao/dynamodb/type-dao.ts");
+const dynamodb_type_1 = __webpack_require__(/*! src/api/services/type/dynamodb/dynamodb-type */ "./src/api/services/type/dynamodb/dynamodb-type.ts");
+const aws_sdk_1 = __webpack_require__(/*! aws-sdk */ "aws-sdk");
 const container = new inversify_1.Container();
 // Table
 container
@@ -1244,15 +751,7 @@ container
     dynamoose.aws.ddb.set(dynamoDBClient);
     return injectable;
 });
-container
-    .bind(type_1.TYPES.ProductsModel)
-    .toDynamicValue((context) => {
-    const modelsProvider = context.container.get(type_1.TYPES.ModelsProvider);
-    return modelsProvider.getProductsModel();
-})
-    .inSingletonScope();
-container.bind(type_1.TYPES.ProductDao).to(products_dao_1.ProductsDao);
-container.bind(type_1.TYPES.ProductService).to(dynamodb_products_1.DynamoDbProductService);
+// variable
 container
     .bind(type_1.TYPES.VariableModel)
     .toDynamicValue((context) => {
@@ -1262,15 +761,16 @@ container
     .inSingletonScope();
 container.bind(type_1.TYPES.VariableDao).to(variable_dao_1.VariableDao);
 container.bind(type_1.TYPES.VariableService).to(dynamodb_variable_1.VariableService);
-container.bind("HomeService").to(home_manage_1.Home);
-container.bind("StudentRoomService").to(student_room_manage_1.StudentRoomManage);
-container.bind(type_1.TYPES.Warrior).to(game_dao_1.Ninja);
-container.bind(type_1.TYPES.Weapon).to(game_dao_1.Katana);
-container.bind(type_1.TYPES.ThrowableWeapon).to(game_dao_1.Shuriken);
-container.bind(type_1.TYPES.Warriors).to(game_new_dao_1.WarriorC);
-container.bind(type_1.TYPES.WeaponWarriors).to(game_new_dao_1.WeaponWarriorC);
-container.bind(type_1.TYPES.Monsters).to(monster_1.MonsterPvP);
-container.bind(type_1.TYPES.PVPMode).to(pvp_1.PlayerPVP);
+// type
+container
+    .bind(type_1.TYPES.TypeModel)
+    .toDynamicValue((context) => {
+    const modelsProvider = context.container.get(type_1.TYPES.ModelsProvider);
+    return modelsProvider.getTypeModel();
+})
+    .inSingletonScope();
+container.bind(type_1.TYPES.TypeDao).to(type_dao_1.TypeDao);
+container.bind(type_1.TYPES.TypeService).to(dynamodb_type_1.TypeService);
 exports["default"] = container;
 
 
@@ -1286,21 +786,15 @@ exports["default"] = container;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TYPES = void 0;
 const TYPES = {
-    Warrior: Symbol.for("Warrior"),
-    Weapon: Symbol.for("Weapon"),
-    ThrowableWeapon: Symbol.for("ThrowableWeapon"),
-    Warriors: Symbol.for("Warriors"),
-    WeaponWarriors: Symbol.for("WeaponWarriors"),
-    Monsters: Symbol.for("Monsters"),
-    PVPMode: Symbol.for("PvPMode"),
     ModelsProvider: Symbol.for("models-provider"),
-    ProductsModel: Symbol.for("products-model"),
-    ProductDao: Symbol.for("products-dao"),
-    ProductService: Symbol.for("product-service"),
     // variable
     VariableModel: Symbol.for("variable-model"),
     VariableDao: Symbol.for("variable-dao"),
     VariableService: Symbol.for("variable-service"),
+    // type
+    TypeModel: Symbol.for("type-model"),
+    TypeDao: Symbol.for("type-dao"),
+    TypeService: Symbol.for("type-service"),
 };
 exports.TYPES = TYPES;
 

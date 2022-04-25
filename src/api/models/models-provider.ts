@@ -1,15 +1,14 @@
 import { ModelType } from "dynamoose/dist/General";
 import { Document } from "dynamoose/dist/Document";
 import * as dynamoose from "dynamoose";
-import { ProductsSchema } from "./schemas/product-schema";
 import { VariableSchema } from "./schemas/variable-schema";
 import { TypeSchema } from "./schemas/type-schema";
 
 export class ModelsProvider {
   private static instance: ModelsProvider;
 
-  private productsModel!: ModelType<Document>; // model table
   private variablesModel!: ModelType<Document>;
+  private typeModel!: ModelType<Document>;
 
   public static getInstance(): ModelsProvider {
     if (!ModelsProvider.instance) {
@@ -17,14 +16,6 @@ export class ModelsProvider {
     }
 
     return ModelsProvider.instance;
-  }
-
-  public getProductsModel(): ModelType<Document> {
-    if (!this.productsModel) {
-      this.productsModel = dynamoose.model("Products", ProductsSchema);
-    }
-
-    return this.productsModel;
   }
 
   public getVariableModel(): ModelType<Document> {
@@ -36,10 +27,10 @@ export class ModelsProvider {
   }
 
   public getTypeModel(): ModelType<Document> {
-    if (!this.variablesModel) {
-      this.variablesModel = dynamoose.model("types", TypeSchema);
+    if (!this.typeModel) {
+      this.typeModel = dynamoose.model("types", TypeSchema);
     }
 
-    return this.variablesModel;
+    return this.typeModel;
   }
 }

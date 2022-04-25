@@ -14,4 +14,14 @@ export class VariableService implements IVariableService {
         console.log('service', result)
         return result
     }
+
+    public async getRelationType() {
+        const result = await this.variableDao.getRelationType();
+        return result;
+    }
+
+    public async getStartAtLimit(startAt, limit) {
+        const result = await this.variableDao.getStartAtLimit(startAt, limit);
+        return result
+    }
 }

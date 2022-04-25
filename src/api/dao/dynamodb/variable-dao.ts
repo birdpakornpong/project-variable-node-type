@@ -34,4 +34,15 @@ export class VariableDao implements IVariableDao {
             console.log('err', err)
         }       
     }
+
+    public async getRelationType() { // test
+        const result = await this.variableModel.get({"id": 1, "sk": "test"})
+    }
+
+    public async getStartAtLimit(startAt, limit) {
+        const response = await this.variableModel.scan().limit(startAt).exec();
+        const result = await this.variableModel.scan().startAt(response.lastKey).limit(limit).exec();
+        const resultSerialize = result.map((res) => res.serialize())
+        return resultSerialize
+    }
 }
